@@ -1,5 +1,9 @@
 package prod.cli.entities.interfaces;
 
-public interface Schedulable {
+import java.util.Date;
+
+public interface Schedulable extends IItem {
+
+    Date getScheduledTime();
 
 }

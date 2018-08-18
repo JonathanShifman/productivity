@@ -12,7 +12,7 @@ public class CommandManager {
 		commandsMap.put("list", null);
 	}
 	
-	public void invokeCommand(String command, String[] args) throws Exception {
+	public void invokeCommand(String command, String[] arguments) throws Exception {
 		if (!commandsMap.containsKey(command)) {
 			throw new Exception("Invalid command: " + command);
 		}

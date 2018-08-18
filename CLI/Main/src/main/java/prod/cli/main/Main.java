@@ -2,6 +2,8 @@ package prod.cli.main;
 
 import prod.cli.commands.CommandManager;
 
+import java.util.Arrays;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -13,7 +15,7 @@ public class Main {
 		System.out.println("Invoking command");
 		CommandManager commandManager = new CommandManager();
 		try {
-			commandManager.invokeCommand(args[0], args);
+			commandManager.invokeCommand(args[0], Arrays.copyOfRange(args, 1, args.length));
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
