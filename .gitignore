@@ -4,3 +4,4 @@ target/
 .recommenders/
 .classpath
 .project
+.idea/
