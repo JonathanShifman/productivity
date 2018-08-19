@@ -1,13 +1,13 @@
 {
-  "chains": [
+  "chains":[
 
   ],
-  "standalone": [
+  "standalones":[
     {
-      "name": "Car",
-      "date": "01/01/2018",
-      "sum": 17000,
-      "currency": "NIS"
+      "name":"Car",
+      "date":"2018-01-01",
+      "sum":17000,
+      "currency":"NIS"
     }
   ]
 }

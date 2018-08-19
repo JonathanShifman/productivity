@@ -1,2 +1,21 @@
 <input type="date" #endDate>
-<input type="button" value="Submit" #submit>
+<input type="button" value="Submit" #submit><br>
+
+<div id="standalones-wrapper">
+  <div *ngFor="let financialEvent of financialData.standalones; let i=index" class="standalone-event">
+    <div>{{ financialEvent.name }}</div>
+    <div>{{ financialEvent.date }}</div>
+    <div>{{ financialEvent.sum }}</div>
+    <div>{{ financialEvent.currency }}</div>
+    <div><input type="button" value="Remove" (click)="removeEvent(i)"></div>
+  </div>
+</div>
+<div>
+  <input type="text" #addEventName><br>
+  <input type="date" #addEventDate><br>
+  <input type="text" #addEventSum><br>
+  <input type="text" #addEventCurrency><br>
+  <input type="button" value="Submit" (click)="submitNewEvent(addEventName.value, addEventDate.value,
+  +addEventSum.value, addEventCurrency.value)">
+</div>
+

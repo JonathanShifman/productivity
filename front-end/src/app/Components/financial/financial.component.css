@@ -1,0 +1,6 @@
+div.standalone-event {
+  display: flex;
+}
+div.standalone-event div {
+  padding: 6px 16px;
+}
