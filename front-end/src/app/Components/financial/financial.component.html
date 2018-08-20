@@ -1,21 +1,59 @@
-<input type="date" #endDate>
-<input type="button" value="Submit" #submit><br>
+<div id="standalones-header">
+  <span>Events</span>
+  <button type="button" class="btn btn-sm btn-success"(click)="open(content)">Add</button>
+</div>
+
+<ng-template #content let-close="close()" let-dismiss="dismiss()">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add a New Financial Event</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>Event Name</label>
+        <div class="input-group">
+          <input #eventName class="form-control" type="text">
+        </div>
+        <label>Event Date</label>
+        <div class="input-group">
+          <input #eventDate class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
+              <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+            </button>
+          </div>
+        </div>
+        <label>Event Name</label>
+        <div class="input-group">
+          <input #eventSum class="form-control" type="text">
+        </div>
+        <label>Event Name</label>
+        <div class="input-group">
+          <input #eventCurrency class="form-control" type="text">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="submitNewEvent(eventName.value, eventDate.value,
+    +eventSum.value, eventCurrency.value); close">Save</button>
+  </div>
+</ng-template>
 
 <div id="standalones-wrapper">
   <div *ngFor="let financialEvent of financialData.standalones; let i=index" class="standalone-event">
-    <div>{{ financialEvent.name }}</div>
-    <div>{{ financialEvent.date }}</div>
-    <div>{{ financialEvent.sum }}</div>
-    <div>{{ financialEvent.currency }}</div>
-    <div><input type="button" value="Remove" (click)="removeEvent(i)"></div>
+    <div class="standalone-event-name">{{ financialEvent.name }}</div>
+    <div class="standalone-event-date">{{ financialEvent.date }}</div>
+    <div class="standalone-event-sum">{{ financialEvent.sum }}</div>
+    <div class="standalone-event-currency">{{ financialEvent.currency }}</div>
+    <div class="standalone-event-remove"><input type="button" value="Remove" (click)="removeEvent(i)"></div>
   </div>
 </div>
-<div>
-  <input type="text" #addEventName><br>
-  <input type="date" #addEventDate><br>
-  <input type="text" #addEventSum><br>
-  <input type="text" #addEventCurrency><br>
-  <input type="button" value="Submit" (click)="submitNewEvent(addEventName.value, addEventDate.value,
-  +addEventSum.value, addEventCurrency.value)">
-</div>
 
+<!--<div id="target-date-wrapper">-->
+  <!--<input type="date" #endDate>-->
+  <!--<input type="button" value="Submit" #submit><br>-->
+<!--</div>-->

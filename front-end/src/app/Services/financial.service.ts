@@ -21,4 +21,5 @@ export class FinancialService {
   get financialData(): FinancialData {
     return this._financialData;
   }
+
 }
