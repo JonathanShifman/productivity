@@ -1,55 +1,137 @@
-<div id="standalones-header">
-  <span>Events</span>
-  <button type="button" class="btn btn-sm btn-success"(click)="open(content)">Add</button>
+<div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="financialDataType">
+  <label ngbButtonLabel class="btn-primary">
+    <input ngbButton type="radio" [value]="0"> Standalones
+  </label>
+  <label ngbButtonLabel class="btn-primary">
+    <input ngbButton type="radio" [value]="1"> Chains
+  </label>
 </div>
 
-<ng-template #content let-close="close()" let-dismiss="dismiss()">
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add a New Financial Event</h4>
-    <button type="button" class="close" aria-label="Close" (click)="dismiss">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <div class="form-group">
-        <label>Event Name</label>
-        <div class="input-group">
-          <input #eventName class="form-control" type="text">
-        </div>
-        <label>Event Date</label>
-        <div class="input-group">
-          <input #eventDate class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
-              <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-            </button>
-          </div>
-        </div>
-        <label>Event Name</label>
-        <div class="input-group">
-          <input #eventSum class="form-control" type="text">
-        </div>
-        <label>Event Name</label>
-        <div class="input-group">
-          <input #eventCurrency class="form-control" type="text">
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="submitNewEvent(eventName.value, eventDate.value,
-    +eventSum.value, eventCurrency.value); close">Save</button>
-  </div>
-</ng-template>
+<div [ngSwitch]="financialDataType">
+  <div id="standalones-wrapper" *ngSwitchCase="0">
+    <div  class="financial-entity-header">
+      <span>Events</span>
+      <button type="button" class="btn btn-sm btn-success"(click)="open(addEventModal)">Add</button>
+    </div>
 
-<div id="standalones-wrapper">
-  <div *ngFor="let financialEvent of financialData.standalones; let i=index" class="standalone-event">
-    <div class="standalone-event-name">{{ financialEvent.name }}</div>
-    <div class="standalone-event-date">{{ financialEvent.date }}</div>
-    <div class="standalone-event-sum">{{ financialEvent.sum }}</div>
-    <div class="standalone-event-currency">{{ financialEvent.currency }}</div>
-    <div class="standalone-event-remove"><input type="button" value="Remove" (click)="removeEvent(i)"></div>
+    <ng-template #addEventModal let-close="close()" let-dismiss="dismiss()">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a New Financial Event</h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label>Event Name</label>
+            <div class="input-group">
+              <input #eventName class="form-control" type="text">
+            </div>
+            <label>Event Date</label>
+            <div class="input-group">
+              <input #eventDate class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
+                  <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                </button>
+              </div>
+            </div>
+            <label>Event Sum</label>
+            <div class="input-group">
+              <input #eventSum class="form-control" type="text">
+            </div>
+            <label>Event Currency</label>
+            <div class="input-group">
+              <input #eventCurrency class="form-control" type="text">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="submitNewEvent(eventName.value, eventDate.value,
+        +eventSum.value, eventCurrency.value); close">Save</button>
+      </div>
+    </ng-template>
+
+    <div *ngFor="let financialEvent of financialData.standalones; let i=index" class="standalone-event">
+      <div class="standalone-event-name">{{ financialEvent.name }}</div>
+      <div class="standalone-event-date">{{ financialEvent.date }}</div>
+      <div class="standalone-event-sum">{{ financialEvent.sum }}</div>
+      <div class="standalone-event-currency">{{ financialEvent.currency }}</div>
+      <div class="standalone-event-remove"><input type="button" value="Remove" (click)="removeEvent(i)"></div>
+    </div>
+  </div>
+
+  <div id="chains-wrapper" *ngSwitchCase="1">
+    <div class="financial-entity-header">
+      <span>Chains</span>
+      <button type="button" class="btn btn-sm btn-success"(click)="open(addChainModal)">Add</button>
+    </div>
+
+    <ng-template #addChainModal let-close="close()" let-dismiss="dismiss()">
+      <div class="modal-header">
+        <h4 class="modal-title">Add a New Financial Event</h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label>Chain Name</label>
+            <div class="input-group">
+              <input #chainName class="form-control" type="text">
+            </div>
+            <label>Chain Starting Date</label>
+            <div class="input-group">
+              <input #chainStartingDate class="form-control" placeholder="yyyy-mm-dd" name="dp1" ngbDatepicker #dp1="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="dp1.toggle()" type="button">
+                  <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                </button>
+              </div>
+            </div>
+            <label>Chain Ending Date</label>
+            <div class="input-group">
+              <input #chainEndingDate class="form-control" placeholder="yyyy-mm-dd" name="dp2" ngbDatepicker #dp2="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="dp2.toggle()" type="button">
+                  <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                </button>
+              </div>
+            </div>
+            <label>Chain Days Frequency</label>
+            <div class="input-group">
+              <input #chainDaysFrequency class="form-control" type="text">
+            </div>
+            <label>Chain Sum</label>
+            <div class="input-group">
+              <input #chainSum class="form-control" type="text">
+            </div>
+            <label>Chain Currency</label>
+            <div class="input-group">
+              <input #chainCurrency class="form-control" type="text">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="submitNewChain(chainName.value,
+        chainStartingDate.value, chainEndingDate.value, +chainDaysFrequency.value, +chainSum.value,
+        chainCurrency.value); close">Save</button>
+      </div>
+    </ng-template>
+
+    <div *ngFor="let chain of financialData.chains; let i=index" class="chain">
+      <div class="chain-name">{{ chain.name }}</div>
+      <div class="chain-starting-date">{{ chain.startingDate }}</div>
+      <div class="chain-ending-date">{{ chain.endingDate }}</div>
+      <div class="chain-days-frequency">{{ chain.daysFrequency }}</div>
+      <div class="chain-sum">{{ chain.sum }}</div>
+      <div class="chain-currency">{{ chain.currency }}</div>
+      <div class="chain-remove"><input type="button" value="Remove" (click)="removeChain(i)"></div>
+    </div>
   </div>
 </div>
 

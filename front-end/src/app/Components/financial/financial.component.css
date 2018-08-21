@@ -1,17 +1,17 @@
-div#standalones-header {
+div.financial-entity-header {
   margin-left: 16px;
 }
-div#standalones-header span {
+div.financial-entity-header span {
   font-weight: bold;
   font-size: 24px;
 }
-div#standalones-header button {
+div.financial-entity-header button {
   margin-left: 16px;
 }
-div.standalone-event {
+div.standalone-event, div.chain {
   display: flex;
 }
-div.standalone-event div {
+div.standalone-event div, div.chain div {
   padding: 6px 16px;
 }
 div.standalone-event div.standalone-event-name {
@@ -27,6 +27,27 @@ div.standalone-event div.standalone-event-currency {
   width: 80px;
 }
 div.standalone-event div.standalone-event-remove {
+  width: 100px;
+}
+div.chain div.chain-name {
+  width: 250px;
+}
+div.chain div.chain-starting-date {
+  width: 160px;
+}
+div.chain div.chain-starting-date {
+  width: 160px;
+}
+div.chain div.chain-days-frequency {
+  width: 80px;
+}
+div.chain div.chain-sum {
+  width: 100px;
+}
+div.chain div.chain-currency {
+  width: 80px;
+}
+div.chain div.chain-remove {
   width: 100px;
 }
 div#target-date-wrapper {
