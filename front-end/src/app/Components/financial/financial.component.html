@@ -5,6 +5,9 @@
   <label ngbButtonLabel class="btn-primary">
     <input ngbButton type="radio" [value]="1"> Chains
   </label>
+  <label ngbButtonLabel class="btn-primary">
+    <input ngbButton type="radio" [value]="2"> Calendar
+  </label>
 </div>
 
 <div [ngSwitch]="financialDataType">
@@ -132,6 +135,11 @@
       <div class="chain-currency">{{ chain.currency }}</div>
       <div class="chain-remove"><input type="button" value="Remove" (click)="removeChain(i)"></div>
     </div>
+  </div>
+
+  <div id="calendar wrapper" *ngSwitchCase="2">
+    <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventDrop)="onEventDrop($event)"></ng-fullcalendar>
+
   </div>
 </div>
 

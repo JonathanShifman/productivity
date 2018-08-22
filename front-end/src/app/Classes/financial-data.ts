@@ -11,4 +11,16 @@ export class FinancialData {
     this.chains = chains;
     this.standalones = standalones;
   }
+
+  getStandaloneCalendarEvents() {
+    const calendarEvents = [];
+    for (const financialEvent of this.standalones) {
+      calendarEvents.push({
+        id: financialEvent.id,
+        title: financialEvent.name,
+        start: financialEvent.date
+      });
+    }
+    return calendarEvents;
+  }
 }

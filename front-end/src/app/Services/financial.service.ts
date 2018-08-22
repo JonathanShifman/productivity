@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import {FinancialData} from '../Classes/financial-data';
+import { FinancialData } from '../Classes/financial-data';
+import {Time} from '@angular/common';
 
 @Injectable()
 export class FinancialService {
@@ -11,7 +12,8 @@ export class FinancialService {
   }
 
   updateMemoryFromStorage() {
-    this._financialData = JSON.parse(localStorage.getItem('financial'));
+    const jsonData = JSON.parse(localStorage.getItem('financial'));
+    this._financialData = new FinancialData(jsonData['chains'], jsonData['standalones']);
   }
 
   updateStorageFromMemory() {
@@ -20,6 +22,15 @@ export class FinancialService {
 
   get financialData(): FinancialData {
     return this._financialData;
+  }
+
+  setNewDate(eventId: number, date) {
+    for (const event of this._financialData.standalones) {
+      if (event.id === eventId) {
+        event.date = date;
+      }
+    }
+    this.updateStorageFromMemory();
   }
 
 }

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FullCalendarModule } from 'ng-fullcalendar';
 
 import { AppComponent } from './Components/app/app.component';
 import { FinancialComponent } from './Components/financial/financial.component';
@@ -11,13 +12,14 @@ import {FinancialService} from './Services/financial.service';
 @NgModule({
   declarations: [
     AppComponent,
-    FinancialComponent
+    FinancialComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule
   ],
   providers: [FinancialService],
   bootstrap: [AppComponent]

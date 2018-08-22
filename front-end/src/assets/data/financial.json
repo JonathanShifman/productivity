@@ -1,12 +1,42 @@
 {
   "chains":[
-
+    {
+      "id": 1,
+      "name":"Haircut",
+      "startingDate":"2017-04-01",
+      "endingDate":"2019-12-28",
+      "daysFrequency":28,
+      "sum":50,
+      "currency":"NIS"
+    }
   ],
   "standalones":[
     {
+      "id": 1,
       "name":"Car",
       "date":"2018-01-01",
       "sum":17000,
+      "currency":"NIS"
+    },
+    {
+      "id": 2,
+      "name":"Ownership transfer 1",
+      "date":"2018-01-01",
+      "sum":200,
+      "currency":"NIS"
+    },
+    {
+      "id": 3,
+      "name":"Ownership transfer 2",
+      "date":"2018-01-01",
+      "sum":200,
+      "currency":"NIS"
+    },
+    {
+      "id": 4,
+      "name":"Car cleaning",
+      "date":"2018-01-01",
+      "sum":650,
       "currency":"NIS"
     }
   ]

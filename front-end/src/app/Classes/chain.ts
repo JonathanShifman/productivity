@@ -1,6 +1,7 @@
 import {Time} from '@angular/common';
 
 export class Chain {
+  id: number;
   name: string;
   startingDate: Time;
   endingDate: Time;
@@ -9,7 +10,8 @@ export class Chain {
   currency: string;
 
 
-  constructor(name: string, startingDate: Time, endingDate: Time, daysFrequency: number, sum: number, currency: string) {
+  constructor(id: number, name: string, startingDate: Time, endingDate: Time, daysFrequency: number, sum: number, currency: string) {
+    this.id = id;
     this.name = name;
     this.startingDate = startingDate;
     this.endingDate = endingDate;
