@@ -15,7 +15,7 @@ import {Time} from '@angular/common';
 })
 export class FinancialComponent implements OnInit {
 
-  @Input() financialData: FinancialData;
+  financialData: FinancialData;
   financialDataType = 0;
 
   calendarOptions: Options;
@@ -80,6 +80,10 @@ this.twoDigitsString(dateObject.getMonth() + 1) + '-' + this.twoDigitsString(dat
       return num.toString();
     }
     return '0' + num.toString();
+  }
+
+  onViewRender(event) {
+    console.log(event);
   }
 
 }

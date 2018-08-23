@@ -8,6 +8,12 @@
   <label ngbButtonLabel class="btn-primary">
     <input ngbButton type="radio" [value]="2"> Calendar
   </label>
+  <label ngbButtonLabel class="btn-primary">
+    <input ngbButton type="radio" [value]="3"> Notes
+  </label>
+  <label ngbButtonLabel class="btn-primary">
+    <input ngbButton type="radio" [value]="4"> People
+  </label>
 </div>
 
 <div [ngSwitch]="financialDataType">
@@ -137,9 +143,17 @@
     </div>
   </div>
 
-  <div id="calendar wrapper" *ngSwitchCase="2">
-    <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventDrop)="onEventDrop($event)"></ng-fullcalendar>
+  <div id="calendar-wrapper" *ngSwitchCase="2">
+    <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventDrop)="onEventDrop($event)"
+                     (viewRender)="onViewRender($event)"></ng-fullcalendar>
+  </div>
 
+  <div id="notes-wrapper" *ngSwitchCase="3">
+    <app-notes></app-notes>
+  </div>
+
+  <div id="people-wrapper" *ngSwitchCase="4">
+    <app-people></app-people>
   </div>
 </div>
 

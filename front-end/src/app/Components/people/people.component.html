@@ -1,0 +1,42 @@
+<div class="people-header">
+  <span>People</span>
+  <button type="button" class="btn btn-sm btn-success"(click)="open(addPersonModal)">Add</button>
+</div>
+
+<ng-template #addPersonModal let-close="close()" let-dismiss="dismiss()">
+  <div class="modal-header">
+    <h4 class="modal-title">Add a Person</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>Person Name</label>
+        <div class="input-group">
+          <input #personName class="form-control" type="text">
+        </div>
+        <label>Person Date</label>
+        <div class="input-group">
+          <input #personDate class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
+              <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="submitNewPerson(personName.value,
+    personDate.value); close">Save</button>
+  </div>
+</ng-template>
+
+<div *ngFor="let person of people; let i=index" class="person">
+  <div class="person-name">{{ person.name }}</div>
+  <div class="person-date">{{ person.date }}</div>
+  <div class="person-remove"><input type="button" value="Remove" (click)="removePerson(i)"></div>
+</div>

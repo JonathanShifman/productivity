@@ -8,11 +8,15 @@ import { AppComponent } from './Components/app/app.component';
 import { FinancialComponent } from './Components/financial/financial.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FinancialService} from './Services/financial.service';
+import { NotesComponent } from './Components/notes/notes.component';
+import { PeopleComponent } from './Components/people/people.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FinancialComponent,
+    NotesComponent,
+    PeopleComponent,
   ],
   imports: [
     BrowserModule,

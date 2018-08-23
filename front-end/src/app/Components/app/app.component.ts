@@ -23,9 +23,13 @@ export class AppComponent implements OnInit {
   }
 
   loadJSONs() {
-    const fileObservable = this.http.get('assets/data/financial.json');
+    let fileObservable = this.http.get('assets/data/financial.json');
     fileObservable.subscribe(tree => {
       localStorage.setItem('financial', JSON.stringify(tree));
+    });
+    fileObservable = this.http.get('assets/data/people.json');
+    fileObservable.subscribe(tree => {
+      localStorage.setItem('people', JSON.stringify(tree));
     });
   }
 
