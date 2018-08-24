@@ -45,7 +45,7 @@
 
 <div *ngFor="let financialEvent of standalones" class="standalone-event">
   <div class="standalone-event-name">{{ financialEvent.name }}</div>
-  <div class="standalone-event-date">{{ financialEvent.date }}</div>
+  <div class="standalone-event-date">{{ financialEvent.date.toDateString() }}</div>
   <div class="standalone-event-sum">{{ financialEvent.sum }}</div>
   <div class="standalone-event-currency">{{ financialEvent.currency }}</div>
   <div class="standalone-event-remove"><input type="button" value="Remove" (click)="removeEvent(financialEvent.id)"></div>

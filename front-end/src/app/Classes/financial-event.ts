@@ -1,5 +1,3 @@
-import {Time} from '@angular/common';
-
 export class FinancialEvent {
   id: number;
   name: string;
@@ -18,9 +16,17 @@ export class FinancialEvent {
   static parse(standaloneJsonData): FinancialEvent {
     const id = standaloneJsonData['id'];
     const name = standaloneJsonData['name'];
-    const date = standaloneJsonData['date'];
+    const date = new Date(standaloneJsonData['date']);
     const sum = standaloneJsonData['sum'];
     const currency = standaloneJsonData['currency'];
     return new FinancialEvent(id, name, date, sum, currency);
+  }
+
+  getCalendarFormatEvent() {
+    return {
+      id: this.id,
+      title: this.name,
+      start: this.date
+    };
   }
 }

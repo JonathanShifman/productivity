@@ -3,9 +3,9 @@ import {Time} from '@angular/common';
 export class Person {
   id: number;
   name: string;
-  date: Time;
+  date: Date;
 
-  constructor(id: number, name: string, birthday: Time) {
+  constructor(id: number, name: string, birthday: Date) {
     this.id = id;
     this.name = name;
     this.date = birthday;
@@ -14,7 +14,7 @@ export class Person {
   static parse(standaloneJsonData): Person {
     const id = standaloneJsonData['id'];
     const name = standaloneJsonData['name'];
-    const date = standaloneJsonData['date'];
+    const date = new Date(standaloneJsonData['date']);
     return new Person(id, name, date);
   }
 }

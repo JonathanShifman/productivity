@@ -37,6 +37,6 @@
 
 <div *ngFor="let person of people" class="person">
   <div class="person-name">{{ person.name }}</div>
-  <div class="person-date">{{ person.date }}</div>
+  <div class="person-date">{{ person.date.toDateString() }}</div>
   <div class="person-remove"><input type="button" value="Remove" (click)="removePerson(person.id)"></div>
 </div>

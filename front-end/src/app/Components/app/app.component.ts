@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
       height: 650,
       defaultDate: '2018-01-01'
     };
+
     this.database = this.databaseService.data;
   }
 
@@ -54,11 +55,11 @@ export class AppComponent implements OnInit {
   }
 
   onEventDrop(event) {
+    console.log(event);
     const dateObject = event.detail.event.start._d;
-    const newDate = dateObject.getFullYear() + '-' +
+    const newDateString = dateObject.getFullYear() + '-' +
       this.twoDigitsString(dateObject.getMonth() + 1) + '-' + this.twoDigitsString(dateObject.getDate());
-    console.log(newDate);
-    this.database.standalones[event.detail.event.id - 1].date = new Date(newDate);
+    this.findEntityById(this.database.standalones, event.detail.event.id).date = new Date(newDateString);
     this.databaseService.updateDatabase();
   }
 
@@ -70,7 +71,11 @@ export class AppComponent implements OnInit {
   }
 
   onViewRender(event) {
-    console.log(event);
+    const startDate = this.getDateFromMoment(event.detail.view.start);
+    const endDate = this.getDateFromMoment(event.detail.view.end);
+
+    const eventsToRender = this.getEventsToRender(startDate, endDate);
+    this.ucCalendar.fullCalendar('renderEvents', eventsToRender);
   }
 
   onFinancialEntityAdded(financialEntity: FinancialEvent) {
@@ -104,10 +109,41 @@ export class AppComponent implements OnInit {
     return -1;
   }
 
+  findEntityById(entities: any[], entityId: number) {
+    const index = this.findEntityIndexById(entities, entityId);
+    if (index >= 0) {
+      return entities[index];
+    }
+    return null;
+  }
+
   getNextEntityId(entities: any[]) {
     if (entities.length === 0) {
       return 1;
     }
     return entities[entities.length - 1].id + 1;
+  }
+
+  getDateFromMoment(moment) {
+    const day = moment._d.getDate();
+    const month = moment._d.getMonth() + 1;
+    const year = moment._d.getFullYear();
+
+    const dateString = year + '-' + month + '-' + day;
+    return new Date(dateString);
+  }
+
+  private getEventsToRender(startDate: Date, endDate: Date) {
+    const eventsToRender = [];
+    for (const event of this.database.standalones) {
+      console.log(event);
+      console.log(event.date);
+      console.log(startDate);
+      console.log(endDate);
+      if (event.date >= startDate && event.date <= endDate) {
+        eventsToRender.push(event.getCalendarFormatEvent());
+      }
+    }
+    return eventsToRender;
   }
 }
