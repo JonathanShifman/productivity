@@ -39,5 +39,17 @@
       "sum":650,
       "currency":"NIS"
     }
+  ],
+  "people":[
+    {
+      "id": 1,
+      "name":"Person 1",
+      "date":"2018-01-10"
+    },
+    {
+      "id": 2,
+      "name":"Person 2",
+      "date":"2018-01-20"
+    }
   ]
 }

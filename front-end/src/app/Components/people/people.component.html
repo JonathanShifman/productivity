@@ -35,8 +35,8 @@
   </div>
 </ng-template>
 
-<div *ngFor="let person of people; let i=index" class="person">
+<div *ngFor="let person of people" class="person">
   <div class="person-name">{{ person.name }}</div>
   <div class="person-date">{{ person.date }}</div>
-  <div class="person-remove"><input type="button" value="Remove" (click)="removePerson(i)"></div>
+  <div class="person-remove"><input type="button" value="Remove" (click)="removePerson(person.id)"></div>
 </div>

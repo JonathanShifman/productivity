@@ -10,4 +10,11 @@ export class Person {
     this.name = name;
     this.date = birthday;
   }
+
+  static parse(standaloneJsonData): Person {
+    const id = standaloneJsonData['id'];
+    const name = standaloneJsonData['name'];
+    const date = standaloneJsonData['date'];
+    return new Person(id, name, date);
+  }
 }

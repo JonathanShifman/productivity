@@ -14,4 +14,13 @@ export class FinancialEvent {
     this.sum = sum;
     this.currency = currency;
   }
+
+  static parse(standaloneJsonData): FinancialEvent {
+    const id = standaloneJsonData['id'];
+    const name = standaloneJsonData['name'];
+    const date = standaloneJsonData['date'];
+    const sum = standaloneJsonData['sum'];
+    const currency = standaloneJsonData['currency'];
+    return new FinancialEvent(id, name, date, sum, currency);
+  }
 }

@@ -1,9 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FinancialService} from '../../Services/financial.service';
 import {Options} from 'fullcalendar';
 import {CalendarComponent} from 'ng-fullcalendar';
+import {FinancialEvent} from '../../Classes/financial-event';
+import {DatabaseService} from '../../Services/database.service';
+import {Database} from '../../Classes/database';
+import {Person} from '../../Classes/person';
 
 @Component({
   selector: 'app-root',
@@ -14,15 +16,15 @@ export class AppComponent implements OnInit {
 
   config;
   primaryMenuSelectedValue = 0;
-  financialData;
+  database: Database;
 
   calendarOptions: Options;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
 
-  constructor(private http: HttpClient, private financialService: FinancialService) {}
+  constructor(private http: HttpClient, private databaseService: DatabaseService) {}
 
   ngOnInit() {
-    const configFileObservable = this.http.get('assets/config/config.json');
+    const configFileObservable = this.http.get('assets/config.json');
     configFileObservable.subscribe(configTree => {
       this.config = configTree;
       if (this.config['shouldLoadFromJSON']) {
@@ -41,22 +43,18 @@ export class AppComponent implements OnInit {
       height: 650,
       defaultDate: '2018-01-01'
     };
-    this.financialData = this.financialService.financialData;
+    this.updateFromDatabase();
   }
 
   loadJSONs() {
-    const jsonsMap = {
-      'financial': 'assets/data/financial.json',
-      'people': './assets/data/people.json'
-    };
+    const fileObservable = this.http.get('assets/data.json');
+    fileObservable.subscribe(tree => {
+      localStorage.setItem('productivity', JSON.stringify(tree));
+    });
+  }
 
-    for (const name of Object.keys(jsonsMap)) {
-      const path = jsonsMap[name];
-      const fileObservable = this.http.get(path);
-      fileObservable.subscribe(tree => {
-        localStorage.setItem(name, JSON.stringify(tree));
-      });
-    }
+  updateFromDatabase() {
+    this.database = this.databaseService.data;
   }
 
   onEventDrop(event) {
@@ -64,8 +62,8 @@ export class AppComponent implements OnInit {
     const newDate = dateObject.getFullYear() + '-' +
       this.twoDigitsString(dateObject.getMonth() + 1) + '-' + this.twoDigitsString(dateObject.getDate());
     console.log(newDate);
-    this.financialService.setNewDate(event.detail.event.id, newDate);
-    this.financialData = this.financialService.financialData;
+    this.databaseService.setNewEventDate(event.detail.event.id, newDate);
+    this.updateFromDatabase();
   }
 
   twoDigitsString(num: number) {
@@ -79,4 +77,19 @@ export class AppComponent implements OnInit {
     console.log(event);
   }
 
+  onFinancialEntityAdded(financialEntity: FinancialEvent) {
+    console.log('Standalone added');
+  }
+
+  onFinancialEntityRemoved(financialEntityId: number) {
+    console.log('Standalone removed');
+  }
+
+  onPersonAdded(person: Person) {
+    console.log('Person added');
+  }
+
+  onPersonRemoved(person: Person) {
+    console.log('Person removed');
+  }
 }

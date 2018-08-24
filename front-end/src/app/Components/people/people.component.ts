@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {PersonService} from '../../Services/person.service';
 import {Person} from '../../Classes/person';
 
 @Component({
@@ -10,23 +9,22 @@ import {Person} from '../../Classes/person';
 })
 export class PeopleComponent implements OnInit {
 
-  people: Person[];
+  @Input() people: Person[];
+  @Output() personAdded = new EventEmitter();
+  @Output() personRemoved = new EventEmitter();
 
-  constructor(private personService: PersonService, private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.people = this.personService.people['people'];
   }
 
   submitNewPerson(name, date) {
     const newPerson: Person = new Person(0, name, date);
-    this.people.push(newPerson);
-    this.personService.updateStorageFromMemory();
+    this.personAdded.emit(newPerson);
   }
 
-  removePerson(index: number) {
-    this.people.splice(index, 1);
-    this.personService.updateStorageFromMemory();
+  removePerson(personId: number) {
+    this.personRemoved.emit(personId);
   }
 
   open(content) {

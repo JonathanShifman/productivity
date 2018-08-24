@@ -1,12 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FinancialService} from '../../Services/financial.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FinancialEvent} from '../../Classes/financial-event';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { CalendarComponent } from 'ng-fullcalendar';
-import {FinancialData} from '../../Classes/financial-data';
-import {Chain} from '../../Classes/chain';
-import {Options} from 'fullcalendar';
-import {Time} from '@angular/common';
 
 @Component({
   selector: 'app-financial',
@@ -15,7 +9,7 @@ import {Time} from '@angular/common';
 })
 export class FinancialComponent implements OnInit {
 
-  @Input() financialData: FinancialData;
+  @Input() standalones: FinancialEvent[];
   @Output() financialEntityAdded = new EventEmitter();
   @Output() financialEntityRemoved = new EventEmitter();
 

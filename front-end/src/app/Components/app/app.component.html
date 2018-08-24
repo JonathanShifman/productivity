@@ -18,7 +18,8 @@
 
 <div [ngSwitch]="primaryMenuSelectedValue">
   <div id="standalones-wrapper" *ngSwitchCase="0">
-    <app-financial [financialData]="financialData"></app-financial>
+    <app-financial [standalones]="database.standalones" (financialEntityAdded)="onFinancialEntityAdded($event)"
+    (financialEntityRemoved)="onFinancialEntityRemoved($event)"></app-financial>
   </div>
   <div id="calendar-wrapper" *ngSwitchCase="2">
     <ng-fullcalendar #ucCalendar [options]="calendarOptions" (eventDrop)="onEventDrop($event)"
@@ -29,6 +30,7 @@
   </div>
 
   <div id="people-wrapper" *ngSwitchCase="4">
-    <app-people></app-people>
+    <app-people [people]="database.people" (personAdded)="onPersonAdded($event)"
+    (personRemoved)="onPersonRemoved($event)"></app-people>
   </div>
 </div>
