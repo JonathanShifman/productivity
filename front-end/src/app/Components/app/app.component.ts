@@ -74,22 +74,40 @@ export class AppComponent implements OnInit {
   }
 
   onFinancialEntityAdded(financialEntity: FinancialEvent) {
+    financialEntity.id = this.getNextEntityId(this.database.standalones);
     this.database.standalones.push(financialEntity);
     this.databaseService.updateDatabase();
   }
 
   onFinancialEntityRemoved(financialEntityId: number) {
-    this.database.standalones.splice(financialEntityId - 1, 1);
+    this.database.standalones.splice(this.findEntityIndexById(this.database.standalones, financialEntityId), 1);
     this.databaseService.updateDatabase();
   }
 
   onPersonAdded(person: Person) {
+    person.id = this.getNextEntityId(this.database.people);
     this.database.people.push(person);
     this.databaseService.updateDatabase();
   }
 
   onPersonRemoved(personId: number) {
-    this.database.people.splice(personId - 1, 1);
+    this.database.people.splice(this.findEntityIndexById(this.database.people, personId), 1);
     this.databaseService.updateDatabase();
+  }
+
+  findEntityIndexById(entities: any[], entityId: number) {
+    for (let i = 0; i < entities.length; i++) {
+      if (entities[i].id === entityId) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  getNextEntityId(entities: any[]) {
+    if (entities.length === 0) {
+      return 1;
+    }
+    return entities[entities.length - 1].id + 1;
   }
 }
