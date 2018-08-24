@@ -32,4 +32,8 @@ export class DatabaseService {
     }
     this.updateStorageFromMemory();
   }
+
+  updateDatabase() {
+    this.updateStorageFromMemory();
+  }
 }

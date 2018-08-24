@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
       height: 650,
       defaultDate: '2018-01-01'
     };
-    this.updateFromDatabase();
+    this.database = this.databaseService.data;
   }
 
   loadJSONs() {
@@ -53,17 +53,13 @@ export class AppComponent implements OnInit {
     });
   }
 
-  updateFromDatabase() {
-    this.database = this.databaseService.data;
-  }
-
   onEventDrop(event) {
     const dateObject = event.detail.event.start._d;
     const newDate = dateObject.getFullYear() + '-' +
       this.twoDigitsString(dateObject.getMonth() + 1) + '-' + this.twoDigitsString(dateObject.getDate());
     console.log(newDate);
-    this.databaseService.setNewEventDate(event.detail.event.id, newDate);
-    this.updateFromDatabase();
+    this.database.standalones[event.detail.event.id - 1].date = new Date(newDate);
+    this.databaseService.updateDatabase();
   }
 
   twoDigitsString(num: number) {
@@ -78,18 +74,22 @@ export class AppComponent implements OnInit {
   }
 
   onFinancialEntityAdded(financialEntity: FinancialEvent) {
-    console.log('Standalone added');
+    this.database.standalones.push(financialEntity);
+    this.databaseService.updateDatabase();
   }
 
   onFinancialEntityRemoved(financialEntityId: number) {
-    console.log('Standalone removed');
+    this.database.standalones.splice(financialEntityId - 1, 1);
+    this.databaseService.updateDatabase();
   }
 
   onPersonAdded(person: Person) {
-    console.log('Person added');
+    this.database.people.push(person);
+    this.databaseService.updateDatabase();
   }
 
-  onPersonRemoved(person: Person) {
-    console.log('Person removed');
+  onPersonRemoved(personId: number) {
+    this.database.people.splice(personId - 1, 1);
+    this.databaseService.updateDatabase();
   }
 }
