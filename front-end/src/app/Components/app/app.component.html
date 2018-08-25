@@ -26,7 +26,8 @@
                      (viewRender)="onViewRender($event)"></ng-fullcalendar>
   </div>
   <div id="notes-wrapper" *ngSwitchCase="3">
-    <app-notes></app-notes>
+    <app-notes [notes]="database.notes" (noteAdded)="onNoteAdded($event)"
+    (noteRemoved)="onNoteRemoved($event)"></app-notes>
   </div>
 
   <div id="people-wrapper" *ngSwitchCase="4">

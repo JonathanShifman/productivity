@@ -6,6 +6,7 @@ import {FinancialEvent} from '../../Classes/financial-event';
 import {DatabaseService} from '../../Services/database.service';
 import {Database} from '../../Classes/database';
 import {Person} from '../../Classes/person';
+import {Note} from '../../Classes/note';
 
 @Component({
   selector: 'app-root',
@@ -36,12 +37,13 @@ export class AppComponent implements OnInit {
       editable: true,
       eventLimit: false,
       header: {
-        left: 'prev,next today',
+        left: 'prev,next',
         center: 'title',
-        right: 'month,agendaWeek,agendaDay,listMonth'
+        right: 'today'
       },
       height: 650,
-      defaultDate: '2018-01-01'
+      defaultDate: '2018-01-01',
+      defaultView: 'agendaWeek'
     };
 
     this.database = this.databaseService.data;
@@ -78,26 +80,39 @@ export class AppComponent implements OnInit {
     this.ucCalendar.fullCalendar('renderEvents', eventsToRender);
   }
 
-  onFinancialEntityAdded(financialEntity: FinancialEvent) {
-    financialEntity.id = this.getNextEntityId(this.database.standalones);
-    this.database.standalones.push(financialEntity);
+  addEntity(entity: any, entities: any[]) {
+    entity.id = this.getNextEntityId(entities);
+    entities.push(entity);
     this.databaseService.updateDatabase();
+  }
+
+  removeEntity(entityId: number, entities: any[]) {
+    entities.splice(this.findEntityIndexById(entities, entityId), 1);
+    this.databaseService.updateDatabase();
+  }
+
+  onFinancialEntityAdded(financialEntity: FinancialEvent) {
+    this.addEntity(financialEntity, this.database.standalones);
   }
 
   onFinancialEntityRemoved(financialEntityId: number) {
-    this.database.standalones.splice(this.findEntityIndexById(this.database.standalones, financialEntityId), 1);
-    this.databaseService.updateDatabase();
+    this.removeEntity(financialEntityId, this.database.standalones);
   }
 
   onPersonAdded(person: Person) {
-    person.id = this.getNextEntityId(this.database.people);
-    this.database.people.push(person);
-    this.databaseService.updateDatabase();
+    this.addEntity(person, this.database.people);
   }
 
   onPersonRemoved(personId: number) {
-    this.database.people.splice(this.findEntityIndexById(this.database.people, personId), 1);
-    this.databaseService.updateDatabase();
+    this.removeEntity(personId, this.database.people);
+  }
+
+  onNoteAdded(note: Note) {
+    this.addEntity(note, this.database.notes);
+  }
+
+  onNoteRemoved(noteId: number) {
+    this.removeEntity(noteId, this.database.notes);
   }
 
   findEntityIndexById(entities: any[], entityId: number) {
@@ -136,10 +151,6 @@ export class AppComponent implements OnInit {
   private getEventsToRender(startDate: Date, endDate: Date) {
     const eventsToRender = [];
     for (const event of this.database.standalones) {
-      console.log(event);
-      console.log(event.date);
-      console.log(startDate);
-      console.log(endDate);
       if (event.date >= startDate && event.date <= endDate) {
         eventsToRender.push(event.getCalendarFormatEvent());
       }

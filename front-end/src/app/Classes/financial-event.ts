@@ -26,7 +26,8 @@ export class FinancialEvent {
     return {
       id: this.id,
       title: this.name,
-      start: this.date
+      start: this.date,
+      allDay: true
     };
   }
 }

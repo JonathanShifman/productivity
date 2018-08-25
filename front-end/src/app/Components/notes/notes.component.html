@@ -1,3 +1,31 @@
-<p>
-  notes works!
-</p>
+<div class="notes-header">
+  <span>Notes</span>
+  <button type="button" class="btn btn-sm btn-success" (click)="open(addNoteModal)">Add</button>
+</div>
+
+<ng-template #addNoteModal let-close="close()" let-dismiss="dismiss()">
+  <div class="modal-header">
+    <h4 class="modal-title">Add a Note</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>Note Name</label>
+        <div class="input-group">
+          <input #noteName class="form-control" type="text">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="submitNewNote(noteName.value); close">Save</button>
+  </div>
+</ng-template>
+
+<div *ngFor="let note of notes" class="note">
+  <div class="note-name">{{ note.name }}</div>
+  <div class="note-remove"><input type="button" value="Remove" (click)="removeNote(note.id)"></div>
+</div>

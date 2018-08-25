@@ -19,7 +19,8 @@
         </div>
         <label>Person Date</label>
         <div class="input-group">
-          <input #personDate class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
+          <input #personDate class="form-control" placeholder="yyyy-mm-dd" [minDate]="{year: 1970, month: 1, day: 1}"
+                 [maxDate]="{year: 2028, month: 12, day: 31}" name="dp" ngbDatepicker #dp="ngbDatepicker">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary" (click)="dp.toggle()" type="button">
               <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
@@ -37,6 +38,6 @@
 
 <div *ngFor="let person of people" class="person">
   <div class="person-name">{{ person.name }}</div>
-  <div class="person-date">{{ person.date.toDateString() }}</div>
+  <div class="person-date">{{ person.date | date: 'dd/MM/yyyy' }}</div>
   <div class="person-remove"><input type="button" value="Remove" (click)="removePerson(person.id)"></div>
 </div>

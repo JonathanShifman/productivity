@@ -18,8 +18,8 @@ export class PeopleComponent implements OnInit {
   ngOnInit() {
   }
 
-  submitNewPerson(name, date) {
-    const newPerson: Person = new Person(0, name, date);
+  submitNewPerson(name, dateString) {
+    const newPerson: Person = new Person(0, name, new Date(dateString));
     this.personAdded.emit(newPerson);
   }
 
