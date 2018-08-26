@@ -57,7 +57,6 @@ export class AppComponent implements OnInit {
   }
 
   onEventDrop(event) {
-    console.log(event);
     const dateObject = event.detail.event.start._d;
     const newDateString = dateObject.getFullYear() + '-' +
       this.twoDigitsString(dateObject.getMonth() + 1) + '-' + this.twoDigitsString(dateObject.getDate());
@@ -153,6 +152,11 @@ export class AppComponent implements OnInit {
     for (const event of this.database.standalones) {
       if (event.date >= startDate && event.date <= endDate) {
         eventsToRender.push(event.getCalendarFormatEvent());
+      }
+    }
+    for (const person of this.database.people) {
+      if (person.date >= startDate && person.date <= endDate) {
+        eventsToRender.push(person.getCalendarFormatEvent());
       }
     }
     return eventsToRender;

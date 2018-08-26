@@ -15,4 +15,13 @@ export class Person {
     const date = new Date(standaloneJsonData['date']);
     return new Person(id, name, date);
   }
+
+  getCalendarFormatEvent() {
+    return {
+      id: this.id,
+      title: this.name,
+      start: this.date,
+      allDay: true
+    };
+  }
 }
